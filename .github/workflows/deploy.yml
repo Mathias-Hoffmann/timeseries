@@ -22,12 +22,10 @@ jobs:
           npm ci
           npm run build
 
-      - name: Deploy
+      - name: Deploy to gh-pages
         run: |
-          cd dist
-          git init
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-          git add -A
-          git commit -m "Deploy to gh-pages"
-          git push --force https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add dist -f
+          git commit -m "Deploy dist folder"
+          git subtree push --prefix dist origin gh-pages
